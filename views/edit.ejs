@@ -1,0 +1,31 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<input type="text" id="title" placeholder="Title" value="<%= post.title %>" />
+<textarea placeholder="Write away!" id="body"></textarea>
+<input type="text" placeholder="key" id="key" /><button onclick="update()">
+  Save
+</button>
+
+<script>
+  var post = <%- JSON.stringify(post) %>
+  document.getElementById('body').value = post.body;
+  var simplemde = new SimpleMDE();
+  function update() {
+    data = {
+      id: post.id,
+      key: document.getElementById("key").value,
+      title: document.getElementById("title").value,
+      md: simplemde.value(),
+    };
+    fetch("/api/edit", {
+      method: "PATCH", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  }
+</script>

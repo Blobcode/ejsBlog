@@ -1,0 +1,28 @@
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<input type="text" id="title" placeholder="Title" />
+<textarea placeholder="Write away!"></textarea>
+<input type="text" placeholder="key" id="key" /><button onclick="post()">
+  Post
+</button>
+<script>
+  var simplemde = new SimpleMDE();
+
+  function post() {
+    data = {
+      key: document.getElementById("key").value,
+      title: document.getElementById("title").value,
+      md: simplemde.value(),
+    };
+    fetch("/api/new", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  }
+</script>

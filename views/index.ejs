@@ -1,0 +1,7 @@
+<blockquote><p>The amused ramblings of a programmer...</p></blockquote>
+
+<% posts.forEach(function(post) { %>
+
+<li><a href="/p/<%= post.id %>"><%= post.title %></a></li>
+
+<% }); %>
